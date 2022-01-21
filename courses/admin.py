@@ -1,10 +1,16 @@
 from django.contrib import admin
-from .models import Course,CourseSection,Rate,Sector,Comment,Episode
+
+from .models import Category, Course, Lesson
 
 
-admin.site.register(Course)
-admin.site.register(CourseSection)
-admin.site.register(Rate)
-admin.site.register(Sector)
-admin.site.register(Comment)
-admin.site.register(Episode)
+class CourseAdmin(admin.ModelAdmin):
+    exclude = ('slug',)
+
+
+class CategoryAdmin(admin.ModelAdmin):
+    exclude = ('slug',)
+
+
+admin.site.register(Category, CategoryAdmin)
+admin.site.register(Course, CourseAdmin)
+admin.site.register(Lesson)

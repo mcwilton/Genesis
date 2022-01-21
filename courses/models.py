@@ -1,127 +1,56 @@
-# from users.models import User
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
-from django.core.validators import MaxValueValidator, MinValueValidator
-from django.conf import settings
-from django.contrib.auth import get_user_model
-import uuid
-from mutagen.mp4 import MP4, MP4StreamInfoError
-from .helpers import get_timer
-from decimal import Decimal
+from django.utils.text import slugify
+from django.utils.timezone import now
 
-###from cloudinary_storage.storage import MediaCloudinaryStorage
-# from cloudinary_storage.validators import validate_video
+from accounts.models import User
 
-from cloudinary.models import CloudinaryField
+
+class Category(models.Model):
+    title = models.CharField(max_length=50)
+    slug = models.SlugField(max_length=200, unique=True)
+
+    def __str__(self):
+        return self.title
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super(Category, self).save(*args, **kwargs)
 
 
 class Course(models.Model):
-    title = models.CharField(max_length=225)
-    description = models.TextField()
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-    rating = models.ManyToManyField('Rate', blank=True)
-    # sector=models.ForeignKey('Sector',on_delete=models.CASCADE)
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    student_rating = models.IntegerField(default=0)
-    language = models.CharField(max_length=225)
-    course_length = models.CharField(default=0, max_length=20)
-    course_sections = models.ManyToManyField('CourseSection', blank=True)
-    comment = models.ManyToManyField('Comment', blank=True)
-    course_uuid = models.UUIDField(default=uuid.uuid4, unique=True)
-    image_url = models.ImageField(upload_to='course_images')#, storage=MediaCloudinaryStorage()
-    price = models.DecimalField(max_digits=5, decimal_places=2)
+    title = models.CharField(max_length=200)
+    user = models.ForeignKey(User, on_delete=models.CASCADE,  null=True)
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
+    slug = models.SlugField(max_length=200, unique=True, primary_key=True, auto_created=False, null=False, default="")
+    short_description = models.TextField(blank=False, max_length=60, null=True)
+    description = models.TextField(blank=False, null=True)
+    outcome = models.CharField(max_length=200, null=True)
+    requirements = models.CharField(max_length=200, null=True)
+    language = models.CharField(max_length=200, null=True)
+    price = models.FloatField(validators=[MinValueValidator(9.99)], null=True)
+    level = models.CharField(max_length=20, null=True)
+    thumbnail = models.ImageField(upload_to='thumbnails/', null=True)
+    video_url = models.CharField(max_length=100, null=True)
+    is_published = models.BooleanField(default=True)
+    created_at = models.DateTimeField(default=now)
+    updated_at = models.DateTimeField(default=now)
 
-    def get_rating(self):
-        ratings = self.rating.all()
-        rate = 0
-        for rating in ratings:
-            rate += rating.rate_number
-        try:
-            rate /= len(ratings)
-        except ZeroDivisionError:
-            rate = 0
-
-        return rate
-
-    def get_no_rating(self):
-        return len(self.rating.all())
-
-    def get_brief_description(self):
-        return self.description[:100]
-
-    def get_enrolled_students(self):
-        students = get_user_model().objects.filter(paid_course=self)
-        return len(students)
-
-    def get_total_lectures(self):
-        lectures = 0
-        for section in self.course_sections.all():
-            lectures += len(section.episodes.all())
-        return lectures
-
-    def total_course_length(self):
-        length = Decimal(0.00)
-
-        for section in self.course_sections.all():
-            for episode in section.episodes.all():
-                length += episode.length
-
-        return get_timer(length, type="short")
-
-
-class Rate(models.Model):
-    rate_number = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(5)])
-
-
-class CourseSection(models.Model):
-    section_title = models.CharField(max_length=225, blank=True, null=True)
-    section_number = models.IntegerField(blank=True, null=True)
-    episodes = models.ManyToManyField('Episode', blank=True)
-
-    def total_length(self):
-        total = Decimal(0.00)
-        for episode in self.episodes.all():
-            total += episode.length
-        return get_timer(total, type='min')
-
-
-class Episode(models.Model):
-    title = models.CharField(max_length=225)
-    file = CloudinaryField(resource_type='video', folder='media')  # validators=[validate_video],
-    # file=models.FileField(upload_to='courses',validators=[validate_video],)
-    length = models.DecimalField(max_digits=100, decimal_places=2)
-
-    def get_video_length(self):
-        try:
-            video = MP4(self.file)
-            return video.info.length
-
-        except MP4StreamInfoError:
-            return 0.0
-
-    def get_video_length_time(self):
-        return get_timer(self.length)
-
-    def get_absolute_url(self):
-        return self.file.url
+    def __str__(self):
+        return self.title
 
     def save(self, *args, **kwargs):
-        self.length = self.get_video_length()
-        # print(self.length)
-        # print(self.file.path)
-
-        return super().save(*args, **kwargs)
+        self.slug = slugify(self.title)
+        super(Course, self).save(*args, **kwargs)
 
 
-class Comment(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    message = models.TextField()
-    created = models.DateTimeField(auto_now=True)
+class Lesson(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='lessons')
+    title = models.CharField(max_length=100)
+    duration = models.FloatField(validators=[MinValueValidator(0.30), MaxValueValidator(30.00)])
+    video_url = models.CharField(max_length=100)
+    created_at = models.DateTimeField(default=now)
+    updated_at = models.DateTimeField(default=now)
 
-
-class Sector(models.Model):
-    name = models.CharField(max_length=225)
-    sector_uuid = models.UUIDField(default=uuid.uuid4, unique=True)
-    related_courses = models.ManyToManyField(Course, blank=True)
-    sector_image = models.ImageField(upload_to='sector_images')  #, storage=MediaCloudinaryStorage()
-
+    def __str__(self):
+        return self.title
