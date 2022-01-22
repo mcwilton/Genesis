@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'accounts',
     'courses',
     'cart',
@@ -57,7 +58,7 @@ ROOT_URLCONF = 'Genesis.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -69,6 +70,10 @@ TEMPLATES = [
                 'courses.context_processors.categories_processor',
                 'cart.context_processors.cart',
             ],
+             'libraries':{
+            'total_minutes': 'courses.template_tags.total_minutes',
+            
+            }
         },
     },
 ]
@@ -140,3 +145,5 @@ AUTH_USER_MODEL = 'accounts.User'
 CART_SESSION_SLUG = 'cart'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+TOTAL_MINUTES = 'total_minutes'

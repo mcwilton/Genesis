@@ -1,344 +1,765 @@
-{% extends 'layouts/base.html' %}
 {% load static %}
 {% load humanize %}
 {% load total_minutes %}
 
 {% block content %}
 
-    <section class="course-header-area">
-        <div class="container">
-            <div class="row align-items-end">
-                <div class="col-lg-8">
-                    <div class="course-header-wrap">
-                        <h1 class="title">{{ course.title }}</h1>
-                        <p class="subtitle">{{ course.short_description|truncatewords:20 }}</p>
-                        <div class="rating-row">
-                            {#                            {{ --<span class="course-badge best-seller">Best seller</span>--}}#}
-                            {% for i in i|rjust:5 %}
-                                {% if forloop.counter <= 5 %}
-                                    <i class="fas fa-star filled" style="color: #f5c85b;"></i>
-                                {% else %}
-                                    <i class="fas fa-star"></i>
-                                {% endif %}
-                            {% endfor %}
-                            <span class="d-inline-block average-rating">5</span>
-                            <span>(20 ratings)</span>
-                            <span class="enrolled-num">
-                                100 students enrolled
-                            </span>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <title>Genesis20 | The NextGen interactive learning platform </title>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="csrf-token" content="XxcllLKieKJvmyzhQ4qVmpKosOSdsCNOI2kwWPbN">
+        <link rel="icon" href="http://genesis-20.com/img/browse_icon.png">
+        <!-- Libs CSS -->
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+              crossorigin="anonymous">
+
+        <link rel="stylesheet" href="http://genesis-20.com/assets/libs/tiny-slider/dist/tiny-slider.css">
+        <link rel="stylesheet" href="http://genesis-20.com/assets/libs/ion-rangeslider/css/ion.rangeslider.min.css">
+        <link rel="stylesheet" href="http://genesis-20.com/assets/libs/litepicker/dist/css/litepicker.css">
+        <link rel="stylesheet" href="http://genesis-20.com/assets/libs/bootstrap-icons/font/bootstrap-icons.css">
+
+
+
+        <!-- Theme CSS -->
+        <link rel="stylesheet" href="http://genesis-20.com/assets/css/theme.min.css">
+        <link rel="stylesheet" href="{% static 'frontend/css/main.css' %}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css">
+
+        <link rel="stylesheet" href="https://cdn.quilljs.com/1.3.6/quill.snow.css">
+        <link rel="stylesheet" href="https://cdn.quilljs.com/1.3.6/quill.bubble.css">
+
+        <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+
+        <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    </head>
+    <body>
+
+    <header class="header bg-dark p-5 text-dark" id="header">
+        <!-- navigation start -->
+        <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg navbar-default">
+                <a class="navbar-brand" href="http://genesis-20.com/"><img
+                        src="http://genesis-20.com/img/Logo White2.png" width="120" alt=""/></a>
+
+                <!--<form class="mt-3 mt-lg-0 ms-lg-3 d-flex align-items-center"     >-->
+                <!--  <span class="position-absolute ps-3 search-icon">-->
+                <!--    <i class="fe fe-search"></i>-->
+                <!--  </span>-->
+                <!--  <input type="search" placeholder="Search Courses" class="form-control ps-6 pl-4">-->
+                <!--</form>-->
+                <div class="home-banner-wrap">
+                    <h2>Best place for learning</h2>
+                    <p>Learn from any topic, choose from category</p>
+                    <form class="" action="{% url 'udemy:search' %}" method="get">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="q"
+                                   placeholder="what do you want to learn?">
+                            <div class="input-group-append">
+                                <button class="btn" type="submit"><i class="fas fa-search"></i></button>
+                            </div>
                         </div>
-                        <div class="created-row">
-                            {#                            {{ --<span class="created-by">--}}#}
-                            {#                            {{ --Created by--}}#}
-                            {#                            {{ --<a href="">first_name last_name</a>--}}#}
-                            {#                            {{ --</span>--}}#}
-                            <span class="last-updated-date">Created on {{ course.created_at|date }}</span>
-                            <span class="last-updated-date">Last updated on {{ course.updated_at|date }}</span>
-                            <span class="comment">
-                                <i class="fas fa-comment"></i>English
-                            </span>
-                        </div>
-                    </div>
+                    </form>
                 </div>
-                <div class="col-lg-4">
 
-                </div>
-            </div>
-        </div>
-    </section>
+                <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbar-default" aria-controls="navbar-default" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <i class="fas fa-th text-white"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbar-default">
+                    <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbar-default" aria-controls="navbar-default" aria-expanded="false"
+                            aria-label="Toggle navigation">
+                        <i class="fas fa-times"></i>
+                    </button>
 
-    <section class="course-content-area">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8">
 
-                    <div class="what-you-get-box">
-                        <div class="what-you-get-title">What i will learn?</div>
-                        <ul class="what-you-get__items">
-                            <li>{{ course.outcome }}</li>
-                        </ul>
-                    </div>
-                    <br>
-                    <div class="course-curriculum-box">
-                        <div class="course-curriculum-title clearfix">
-                            <div class="title float-left">Lessons for this course</div>
-                            <div class="float-right">
-                                <span class="total-lectures">
-                                    {{ course.lessons.count }} lessons
+                    <ul class="navbar-nav ms-auto me-lg-3 ">
+                        <li class="nav-item dropdown disabled">
+                            <a class="nav-link d-lg-none" href="#">
+                                Menu
+                            </a>
+                        </li>
+                        <div class="wishlist-box menu-icon-box" id="wishlist_items">
+                            {#                        Wishlist will be here#}
+                        </div>
+
+                        <li class="nav-item ">
+                            <a class="nav-link " href="http://genesis-20.com/">
+                                Browse Courses
+                            </a>
+                        </li>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="menu-7" data-bs-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false">
+                                <i class="fe fe-shopping-cart font-20"></i> <span
+                                    class="badge bg-secondary position-absolute top-0 start-100 translate-middle">0</span>
+                            </a>
+
+                            <ul class="dropdown-menu dropdown-menu-arrow  dropdown-menu-xl-left dropdown-menu-md  "
+                                aria-labelledby="menu-7">
+
+                                <li class="p-3">
+                                    <a class="dropdown-list-group-item" href="http://genesis-20.com/student/cart">
+                                        <div class="d-flex align-items-center mb-3">
+                                  <span class="me-3">
+                                    <i class="fe fe-shopping-bag font-24"></i>
                                 </span>
-                                <span class="total-time">
-                                    2 hours
-                                </span>
-                            </div>
-                        </div>
-                        <div class="course-curriculum-accordion">
+                                            <div>
+                                                <h5 class="font-14 text-muted ">You have <strong>0</strong> courses on
+                                                    your cart list</h5>
 
-                            <div class="lecture-group-wrapper">
-                                <div class="lecture-group-title clearfix" data-toggle="collapse"
-                                     data-target="#collapse"
-                                     aria-expanded="false">
-                                    <div class="title float-left">
-                                        Lessons
-                                    </div>
-                                    <div class="float-right">
-                                        <span class="total-lectures">
-                                             {{ course.lessons.count }} lessons
-                                        </span>
-                                        <span class="total-time">
-                                            {{ course.lessons|total_minutes | floatformat:2 }} minute
-                                        </span>
-                                    </div>
-                                </div>
-
-                                <div id="collapse" class="lecture-list collapse">
-                                    <ul>
-                                        {% for lesson in course.lessons.all %}
-                                            <li class="lecture has-preview">
-                                                <span class="lecture-title">{{ lesson.title }}</span>
-                                                <span class="lecture-time float-right">{{ lesson.duration | floatformat:2 }}</span>
-                                                <!-- <span class="lecture-preview float-right" data-toggle="modal" data-target="#CoursePreviewModal">Preview</span> -->
-                                            </li>
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="requirements-box">
-                        <div class="requirements-title">Requirements</div>
-                        <div class="requirements-content">
-                            <ul class="requirements__list">
-                                <li>{{ course.requirements }}</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="description-box view-more-parent">
-                        <div class="view-more" onclick="viewMore(this,'hide')">
-                            + View More
-                        </div>
-                        <div class="description-title">Description</div>
-                        <div class="description-content-wrap">
-                            <div class="description-content">
-                                {{ course.description }}
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="compare-box view-more-parent">
-                        <div class="view-more" onclick="viewMore(this)">+ View More</div>
-                        <div class="compare-title">Other Related Courses</div>
-                        <div class="compare-courses-wrap">
-
-                        </div>
-                    </div>
-
-                    <div class="about-instructor-box">
-                        <div class="about-instructor-title">
-                            About the instructor
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <div class="about-instructor-image">
-                                    <img src="" alt="" class="img-fluid">
-                                    <ul>
-                                        <!-- <li><i class="fas fa-star"></i><b>4.4</b> Average Rating</li> -->
-                                        <li>
-                                            <i class="fas fa-comment"></i><b>
-                                            100
-                                        </b> reviews
-                                        </li>
-                                        <li><i class="fas fa-user"></i><b>
-                                            120
-                                        </b> Students
-                                        </li>
-                                        <li>
-                                            <i class="fas fa-play-circle"></i>
-                                            <b>
-                                                11
-                                            </b> Courses
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="col-lg-8">
-                                <div class="about-instructor-details view-more-parent">
-                                    <div class="view-more" onclick="viewMore(this)">+ View More</div>
-                                    <div class="instructor-name">
-                                        <a href=""></a>
-                                    </div>
-                                    <div class="instructor-title">
-                                        title
-                                    </div>
-                                    <div class="instructor-bio">
-                                        biography
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="student-feedback-box">
-                        <div class="student-feedback-title">
-                            Student feedback
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6 col-lg-offset-4">
-                                <div class="average-rating">
-                                    <div class="num">
-                                        {#                                        {{ $course->average }}#}
-                                        3
-                                    </div>
-                                    <div class="rating">
-                                        {% for i in i|rjust:5 %}
-                                            {% if forloop.counter <= 5 %}
-                                                <i class="fas fa-star filled" style="color: #f5c85b;"></i>
-                                            {% else %}
-                                                <i class="fas fa-star" style="color: #abb0bb;"></i>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </div>
-                                    <div class="title">Average rating</div>
-                                </div>
-                            </div>
-                            {#                            {{--<div class="col-lg-9">--}}#}
-                            {#                                {{--<div class="individual-rating">--}}#}
-                            {#                                    {{--<ul>--}}#}
-                            {#                                        {{--@for($i = 1; $i <= 5; $i++)--}}#}
-                            {#                                            {{--<li>--}}#}
-                            {#                                                {{--<div class="progress">--}}#}
-                            {#                                                    {{--<div class="progress-bar" style="width: 20%"></div>--}}#}
-                            {#                                                {{--</div>--}}#}
-                            {#                                                {{--<div>--}}#}
-                            {#                                                    {{--<span class="rating">--}}#}
-                            {#                                                        {{--@for($j = 1; $j <= (5 - $i); $j++)--}}#}
-                            {#                                                            {{--<i class="fas fa-star"></i>--}}#}
-                            {#                                                        {{--@endfor--}}#}
-                            {#                                                        {{--@for($j = 1; $j <= $i; $j++)--}}#}
-                            {#                                                            {{--<i class="fas fa-star filled"></i>--}}#}
-                            {#                                                        {{--@endfor--}}#}
-                            {#                                                    {{--</span>--}}#}
-                            {#                                                    {{--<span>30%</span>--}}#}
-                            {#                                                {{--</div>--}}#}
-                            {#                                            {{--</li>--}}#}
-                            {#                                        {{--@endfor--}}#}
-                            {#                                    {{--</ul>--}}#}
-                            {#                                {{--</div>--}}#}
-                            {#                            {{--</div>--}}#}
-                        </div>
-                        <div class="reviews">
-                            <div class="reviews-title">Reviews</div>
-                            <ul>
-                                <li>
-                                    <div class="row">
-                                        <div class="col-lg-4">
-                                            <div class="reviewer-details clearfix">
-                                                <div class="reviewer-img float-left">
-                                                    <img src="" alt="">
-                                                </div>
-                                                <div class="review-time">
-                                                    <div class="time">
-                                                        Review time
-                                                    </div>
-                                                    <div class="reviewer-name">
-                                                        Name
-                                                    </div>
-                                                </div>
                                             </div>
+
                                         </div>
-                                        <div class="col-lg-8">
-                                            <div class="review-details">
-                                                <div class="rating">
-                                                    {% for i in i|rjust:5 %}
-                                                        {% if forloop.counter <= 5 %}
-                                                            <i class="fas fa-star filled" style="color: #f5c85b;"></i>
-                                                        {% else %}
-                                                            <i class="fas fa-star" style="color: #abb0bb;"></i>
-                                                        {% endif %}
-                                                    {% endfor %}
-                                                </div>
-                                                <div class="review-text">
-                                                    Review
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                        <hr>
+                                        <h5>Total: R0</h5>
+                                    </a>
                                 </li>
                             </ul>
+                        </li>
+                        <ul> {% if request.user.is_authenticated %}
+                            <div class="user-box menu-icon-box">
+                                <div class="icon">
+                                    <a href="">
+                                        <img src="{% static 'images/avatar.png' %}" alt="" class="img-fluid">
+                                    </a>
+                                </div>
+                                <div class="dropdown user-dropdown corner-triangle top-right">
+                                    <ul class="user-dropdown-menu">
+
+                                        <li class="dropdown-user-info">
+                                            <a href="">
+                                                <div class="clearfix">
+                                                    <div class="user-image float-left">
+                                                        <img src="{% static 'images/avatar.png' %}" alt=""
+                                                             class="img-fluid">
+                                                    </div>
+                                                    <div class="user-details">
+                                                        <div class="user-name">
+                                                            <span class="hi">hi,</span> {{ request.user.email }}
+                                                        </div>
+                                                        <div class="user-email">
+                                                            <span class="email">{{ request.user.name }}</span>
+                                                            <span class="welcome">Welcome back</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </li>
+
+                                        <li class="user-dropdown-menu-item">
+                                            <a href="{% url 'accounts:enrolled-courses' %}">
+                                                <i class="far fa-gem"></i>Enrolled Courses
+                                            </a>
+                                        </li>
+                                        <li class="user-dropdown-menu-item">
+                                            <a href="">
+                                                <i class="far fa-heart"></i>My Wishlist
+                                            </a>
+                                        </li>
+                                        <li class="user-dropdown-menu-item">
+                                            <a href="{% url 'accounts:my-profile' %}">
+                                                <i class="fas fa-user"></i>Profile Edit
+                                            </a>
+                                        </li>
+                                        <li class="dropdown-user-logout user-dropdown-menu-item">
+                                            <a href="{% url 'accounts:logout' %}">Logout</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        {% else %}
+                            <span class="signin-box-move-desktop-helper"></span>
+                            <div class="sign-in-box btn-group">
+
+                                <a href="{% url 'accounts:login' %}" class="btn btn-sign-in">Login</a>
+
+                                <a href="{% url 'accounts:register' %}" class="btn btn-sign-up">Sign up</a>
+
+                            </div>
+                        {% endif %}
+
+
+                        </ul>
+
+
+                </div>
+            </nav>
+        </div>
+        <!-- navigation close -->
+    </header>
+    </div>
+    <!--Container Main start-->
+
+
+    <div class="pt-lg-12 pb-lg-8 pt-8 pb-12 bg-primary">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-xl-7 col-lg-7 col-md-12">
+                    <div>
+                        <span class="text-uppercase text-white-50">{{ course.category }}</span>
+                        <h1 class="text-white display-4 fw-semi-bold">{{ course.title }}</h1>
+                        <p class="text-white mb-6 lead">
+                            {{ course.short_description|truncatewords:100 }}
+                        </p>
+                        <div class="d-flex align-items-center text-white">
+
+                            <span class="me-2"><i class="fa fa-user"> </i> {{ course.level }}</span>
+                            <span class="me-2"><i class="fa fa-monitor"> </i> Self-paced</span>
+                            <span class="me-2"><i class="fa fa-repeat"> </i> Lifetime Access</span>
+
+
+                        </div>
+                    </div>
+
+                    <a class="btn btn-dark mt-4 me-3" data-bs-toggle="modal" data-bs-target="#CallBack">Request a call
+                        back.</a>
+
+                </div>
+
+                <div class="col-md-5 col-12 mb-n2 order-1">
+                    <div class="">
+                        <!-- img -->
+                        <img src="{{ course.thumbnail.url }}" alt=""
+                             style="border-radius: 90%; height: 400px; width: 400px">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="pt-lg-6 pb-lg-6 py-6 ">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-8 col-lg-8 col-md-7 col-sm-12 col-12 mb-8">
+                    <div>
+                        <ul class="nav nav-justified mb-5 " id="pills-tab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active fw-bold" id="pills-Overview-tab" data-bs-toggle="pill"
+                                   href="#pills-Overview" role="tab" aria-controls="pills-Overview"
+                                   aria-selected="true">Overview </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link fw-bold" id="pills-Curriculum-tab" data-bs-toggle="pill"
+                                   href="#pills-Curriculum" role="tab" aria-controls="pills-Curriculum"
+                                   aria-selected="false">Curriculum</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="pills-tabContent">
+                            <div class="tab-pane fade mod_active show active text-dark" id="pills-Overview"
+                                 role="tabpanel" aria-labelledby="pills-Overview-tab">
+                                <div>
+
+
+                                    {{ course.description }}
+                                   <br/>
+                                     <br/>
+                                    <p><h3><b>What You Will Learn</b></h3></p>
+                                    {{ course.outcome }}
+
+                                </div>
+
+
+                            </div>
+
+
+                            <div class="tab-pane fade" id="pills-Curriculum" role="tabpanel"
+                                 aria-labelledby="pills-Curriculum-tab">
+
+                                <div>
+
+
+                                    <div class="card mb-4">
+                                        <div class="card-body p-5">
+                                            <div class="d-lg-flex justify-content-between align-items-center mb-2">
+                                                <div id="collapse" class="lecture-list collapse">
+                                                    <ul>
+                                                        {% for lesson in course.lessons.all %}
+                                                            <li class="lecture has-preview">
+                                                               {{ lesson.title }}
+                                                               {{ lesson.duration | floatformat:2 }}
+                                                                <!-- <span class="lecture-preview float-right" data-toggle="modal" data-target="#CoursePreviewModal">Preview</span> -->
+                                                            </li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                </div>
+                                                <div>
+                                                    <h5 class="text-secondary text-uppercase">Lesson-1</h5>
+                                                </div>
+                                            </div>
+
+
+                                           
+
+                                        </div>
+                                    </div>
+
+
+                                    
+
+
+                                    
+
+
+                                </div>
+
+                            </div>
+
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="course-sidebar natural">
-                        <div class="preview-video-box">
-                            <a data-toggle="modal" data-target="#CoursePreviewModal">
-                                <img src="{% static 'images/learning.jpg' %}" alt="" class="img-fluid">
-                                <span class="preview-text">Preview this course</span>
-                                <span class="play-btn"></span>
-                            </a>
+                <!-- sidebar -->
+                <div class="col-xl-4 col-lg-4 col-md-5 col-sm-12 col-12 mb-8">
+                    <div class="card">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item py-3 bg-dark">
+                                <div class="">
+                                    <div>
+                                        <div class="d-flex align-items-center">
+                                            <h5 class="mb-0 font-weight-large font-20 text-white"> Summary</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item py-3">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <div class="d-flex align-items-center">
+                                            <i class="fa fa-shopping-bag me-2 font-16 fa-fw text-muted"></i>
+                                            <h5 class="mb-0 font-weight-medium">Course Pricing</h5>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h5 class="mb-0 text-primary fw-bold">{{ course.price }}</h5>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li class="list-group-item py-3">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <div class="d-flex align-items-center">
+                                            <i class="fa fa-book me-2 font-16 fa-fw text-muted"></i>
+                                            <h5 class="mb-0 font-weight-medium">Lessons</h5>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p class="mb-0 text-muted">{{ course.lessons.count }}</p>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li class="list-group-item py-3">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <div class="d-flex align-items-center">
+                                            <i class="fe fe-book-open me-2 font-16 fa-fw text-muted"></i>
+                                            <h5 class="mb-0 font-weight-medium">Time in Minutes</h5>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p class="mb-0 text-muted">  {{ course.lessons|total_minutes }}</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item py-3">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <div class="d-flex align-items-center">
+                                            <i class="fa fa-help-circle me-2 font-16 fa-fw text-muted"></i>
+                                            <h5 class="mb-0 font-weight-medium">Created on</h5>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p class="mb-0 text-muted"> {{ course.created_at|date }}</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item py-3">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <div class="d-flex align-items-center">
+                                            <i class="fa fa-award me-2 font-16 fa-fw text-muted"></i>
+                                            <h5 class="mb-0 font-weight-medium">Certification</h5>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p class="mb-0 text-muted">{{ course.certification }}</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item py-3">
+                                <div class="d-grid">
+
+                                    <a href="http://genesis-20.com/student/cart/Time-Management"
+                                       class="btn btn-outline-dark"> <i class="fe fe-shopping-cart"></i> &nbsp; Add to
+                                        Cart</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="py-lg-6 py-6 bg-light">
+            <div class="container">
+                <div class="row">
+                    <div class=" col-xl-12 col-lg-7 col-md-12 col-12">
+                        <div class="mb-6">
+                            <!-- heading -->
+                            <h2 class="mb-2 display-5">Successful Time Management Online features</h2>
+                            <!-- para -->
+                            <p class="lead mb-0">Our value added services to make your learning experience with us
+                                confortable and convinient.</p>
                         </div>
-                        <div class="course-sidebar-text-box">
-                            <div class="price">
-                                <span class="current-price">
-                                    $<span class="current-price">{{ course.price | floatformat:2 | intcomma }}</span></span>
-                                <input type="hidden" id="total_price_of_checking_out" value="{{ course.price | floatformat:2 }}">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-12">
+                        <!-- card -->
+                        <div class="card rounded-3 mb-5">
+                            <!-- feature -->
+                            <div class="p-5 d-flex justify-content-between
+                  align-items-center">
+                                <div class="">
+                                    <!-- content -->
+                                    <h4 class="mb-1">Certification</h4>
+                                    <p class="mb-0">Successfully complete all your assignments & tasks to get awarded a
+                                        <b>Successful Time Management certification</b> of completion. </p>
+                                </div>
+                                <div class="">
+                                    <!-- icon -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24
+                      24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                         stroke-linejoin="round" class="feather
+                      feather-award text-primary">
+                                        <circle cx="12" cy="8" r="7"></circle>
+                                        <polyline points="8.21 13.89 7 23 12 20 17 23
+                        15.79 13.88"></polyline>
+                                    </svg>
+                                </div>
                             </div>
-
-                            {#                            {{ --<div class="buy-btns">--}}#}
-                            {#                            {{ --<button class="btn btn-buy-now" type="button">Already purchased</button>--}}#}
-                            {#                            {{ --</div>--}}#}
-                            <div class="buy-btns">
-                                {% if is_enrolled %}
-                                    <button class="btn btn-add-cart" type="button"
-                                            style="background-color: #00796b; border-color: #08796f; color: #ffffff">
-                                        Go to course
-                                    </button>
-                                {% else %}
-                                    {% if is_in_cart %}
-                                        {#                                    <a href="" class="btn btn-buy-now" id="course_2" onclick="handleBuyNow(this)">Buy#}
-                                        {#                                        now</a>#}
-                                        <button class="btn btn-add-cart" type="button"
-                                                style="background-color: #ec5252; border-color: #ec5252; color: #ffffff">
-                                            Added to cart
-                                        </button>
-                                    {% else %}
-                                        <form action="{% url 'cart:cart_add' course.slug %}" method="post">
-                                            {% csrf_token %}
-                                            <input type="hidden" value="" name="course_id">
-                                            <input type="hidden" value="" name="name">
-                                            <input type="hidden" value="" name="price">
-                                            <input type="hidden" value="1" name="quantity">
-
-                                            <button class="btn btn-add-cart" type="submit" id="cart">Add to cart
-                                            </button>
-                                        </form>
-                                    {% endif %}
-                                {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <!-- card -->
+                        <div class="card rounded-3 mb-5">
+                            <div class="p-5 d-flex justify-content-between
+                  align-items-center">
+                                <!-- heading -->
+                                <div class="">
+                                    <h4 class="mb-1">Forum</h4>
+                                    <!-- para -->
+                                    <p class="mb-0">We have a community forum for our learners that further facilitates
+                                        learning through peer interaction and knowledge sharing. </p>
+                                </div>
+                                <div class="">
+                                    <!-- icon -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24
+                      24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                         stroke-linejoin="round" class="feather
+                      feather-coffee text-primary">
+                                        <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+                                        <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0
+                        1-4-4V8z"></path>
+                                        <line x1="6" y1="1" x2="6" y2="4"></line>
+                                        <line x1="10" y1="1" x2="10" y2="4"></line>
+                                        <line x1="14" y1="1" x2="14" y2="4"></line>
+                                    </svg>
+                                </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <!-- card -->
+                        <div class="card rounded-3 mb-5">
+                            <div class="p-5 d-flex justify-content-between
+                  align-items-center">
+                                <div class="">
+                                    <!-- heading -->
+                                    <h4 class="mb-1">Support</h4>
+                                    <!-- para -->
+                                    <p class="mb-0">We have a lifetime 24x7 online support team to resolve all your
+                                        technical queries, through a ticket based tracking system. </p>
+                                </div>
+                                <div class="">
 
-                            <div class="includes">
-                                <div class="title"><b>Includes:</b></div>
-                                <ul>
-                                    <li>
-                                        <i class="far fa-file-video"></i>
-                                        on demand videos
-                                    </li>
-                                    <li>
-                                        <i class="far fa-file"></i> 30 lessons
-                                    </li>
-                                    <li><i class="far fa-compass"></i>Full lifetime access
-                                    </li>
-                                    <li>
-                                        <i class="fas fa-mobile-alt"></i>Access on mobile and tv
-                                    </li>
-                                </ul>
+                                    <!-- icon -->
+
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24
+                      24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                         stroke-linejoin="round" class="feather
+                      feather-loader text-primary">
+                                        <line x1="12" y1="2" x2="12" y2="6"></line>
+                                        <line x1="12" y1="18" x2="12" y2="22"></line>
+                                        <line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line>
+                                        <line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line>
+                                        <line x1="2" y1="12" x2="6" y2="12"></line>
+                                        <line x1="18" y1="12" x2="22" y2="12"></line>
+                                        <line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line>
+                                        <line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line>
+                                    </svg>
+                                </div>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-12">
+                        <!-- card -->
+                        <div class="card rounded-3 mb-5">
+                            <div class="p-5 d-flex justify-content-between
+                  align-items-center">
+                                <div class="">
+                                    <!-- heading -->
+                                    <h4 class="mb-1">Lifetime Access</h4>
+                                    <!-- para -->
+                                    <p class="mb-0">You will get lifetime access to all your study materials whenever
+                                        you need them. </p>
+                                </div>
+                                <div class="">
+
+                                    <!-- icon -->
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24
+  24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather
+  feather-video text-primary">
+                                        <polygon points="23 7 16 12 23 17 23 7"></polygon>
+                                        <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+                                    </svg>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="container">
+            <div class="row py-6">
+                <div class="col-lg-12 col-md-12 col-12">
+                    <h3>Related Courses</h3>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- course thumbnail -->
+                <div class="col-xl-4 col-lg-4 col-md-6 col-12">
+                    <div class="card mb-4">
+                        <a href="#">
+                            <img src="../assets/images/course-img-4.jpg" alt="" class="img-fluid w-100 border-top
+                       border-5 border-primary rounded-top">
+                        </a>
+                        <div class="card-body p-4">
+                            <a href="#">
+                                <h4 class="mb-4">Leadership &amp; Management Development</h4>
+                            </a>
+                            <p class="font-13 fw-bold">
+                                <span class="me-2">20 Lessons</span>
+                                <span class="me-2">54 Students</span> <span>2 weeks</span>
+                            </p>
+                            <span class="fw-bold text-secondary h4 mb-0">R35.00</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- course thumbnail -->
+                <div class="col-xl-4 col-lg-4 col-md-6 col-12">
+                    <div class="card mb-4">
+                        <a href="#">
+                            <img src="../assets/images/course-img-5.jpg" alt="" class="img-fluid w-100 border-top
+                         border-5 border-primary rounded-top">
+                        </a>
+                        <div class="card-body p-4">
+                            <a href="#"><h4 class="mb-4">
+                                Transform your relationship with Coaching
+                            </h4></a>
+                            <p class="font-13 fw-bold">
+                                <span class="me-2">12 Lessons</span>
+                                <span class="me-2">12 Students</span> <span>2 weeks</span>
+                            </p>
+                            <span class="fw-bold text-secondary h4 mb-0">R65.00</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- course thumbnail -->
+                <div class="col-xl-4 col-lg-4 col-12 d-md-none d-lg-block">
+                    <div class="card mb-4">
+                        <a href="#">
+                            <img src="../assets/images/course-img-6.jpg" alt="" class="img-fluid w-100 border-top
+                     border-5 border-primary rounded-top">
+                        </a>
+                        <div class="card-body p-4">
+                            <a href="#"><h4 class="mb-4">
+                                Team Coaching Principles and Strategies
+                            </h4></a>
+                            <p class="font-13 fw-bold">
+                                <span class="me-2">7 Lessons</span>
+                                <span class="me-2">65 Students</span> <span>1 weeks</span>
+                            </p>
+                            <span class="fw-bold text-secondary h4 mb-0">R35.00</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="CallBack" tabindex="-1" aria-labelledby="CallBackLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-body z-1 ">
+                    <!-- card -->
+
+                    <div class="mb-6 text-center">
+                        <h2 class="mb-3">Request call back</h2>
+                        <p>
+                            Fill in the following details necessary to call you back.
+                        </p>
+                    </div>
+                    <!-- form -->
+                    <form class="row">
+                        <div class="col-12 col-md-6 mb-3">
+                            <!-- input -->
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="name" placeholder="Name" name="name"
+                                   required="">
+                        </div>
+                        <!-- input -->
+                        <div class="col-12 col-md-6 mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" placeholder="Email" name="email"
+                                   required="">
+                        </div>
+                        <!-- input -->
+                        <div class="mb-3 col-12 col-md-6 mb-3">
+                            <label for="program-date" class="form-label">Date</label>
+                            <input type="text" id="program-date" class="form-control" placeholder="Select Date">
+                        </div>
+                        <!-- input -->
+                        <div class="mb-3 col-12 col-md-6 mb-4">
+                            <label for="time" class="form-label">Time</label>
+                            <select class="form-select" id="time">
+                                <option selected="">Select time</option>
+                                <option value="1">10:00 AM</option>
+                                <option value="2">12:00 PM</option>
+                                <option value="3">02:40 PM</option>
+                            </select>
+                        </div>
+                        <!-- button -->
+                        <div class="col-12">
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary">
+                                    Submit Request
+                                </button>
+                            </div>
+                        </div>
+                        <!-- para -->
+                        <div class="col-12">
+                            <p class="mt-3 text-muted mb-0 small">
+                                By clicking the button above, you agree to our
+                                <a href="#" class="text-secondary fw-semi-bold">
+                                    Privacy Policy</a>
+                                and
+                                <a href="#" class="text-secondary fw-semi-bold">Terms of
+                                    Use</a>, including receiving emails.
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- Optional JavaScript -->
+    <!-- Libs JS -->
+    <script src="http://genesis-20.com/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script>
+        $(function () {
+
+
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+
+    <script src="http://genesis-20.com/assets/libs/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="http://genesis-20.com/assets/libs/magnific-popup/dist/jquery.magnific-popup.min.js"></script>
+    <script src="http://genesis-20.com/assets/libs/prismjs/prism.js"></script>
+
+    <script src="http://genesis-20.com/assets/libs/litepicker/dist/litepicker.js"></script>
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function (event) {
+
+            const showNavbar = (toggleId, navId, bodyId, headerId) => {
+                const toggle = document.getElementById(toggleId),
+                    nav = document.getElementById(navId),
+                    bodypd = document.getElementById(bodyId),
+                    headerpd = document.getElementById(headerId)
+
+                // Validate that all variables exist
+                if (toggle && nav && bodypd && headerpd) {
+                    toggle.addEventListener('click', () => {
+                        // show navbar
+                        nav.classList.toggle('shows')
+                        // change icon
+                        toggle.classList.toggle('bx-menu-alt-left')
+                        // add padding to body
+                        bodypd.classList.toggle('body-pd')
+                        // add padding to header
+                        headerpd.classList.toggle('body-pd')
+                    })
+                }
+            }
+
+            showNavbar('header-toggle', 'nav-bar', 'body-pd', 'header')
+
+
+            // Your code to run since DOM is loaded and ready
+        });
+    </script>
+
+    <script>
+        new Litepicker({
+            element: document.getElementsByClassName('pickDate'),
+            autoApply: false,
+        })
+    </script>
+
+    <script src="http://genesis-20.com/assets/libs/ion-rangeslider/js/ion.rangeslider.min.js"></script>
+    <script src="http://genesis-20.com/assets/libs/inputmask/dist/jquery.inputmask.min.js"></script>
+    <script src="http://genesis-20.com/assets/libs/tiny-slider/dist/min/tiny-slider.js"></script>
+    <!-- clipboard -->
+    <script src="http://genesis-20.com/ajax/libs/clipboard-js/1-5-12/clipboard.min.js"></script>
+    <!-- Theme JS -->
+    <script src="http://genesis-20.com/assets/js/theme.min.js"></script>
+
+
+    </html>
+
+
 
 {% endblock %}

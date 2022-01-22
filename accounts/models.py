@@ -1,7 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-# from accounts.managers import UserManager
+from accounts.managers import UserManager
 
 
 class User(AbstractUser):
@@ -22,4 +22,4 @@ class User(AbstractUser):
     def get_short_name(self):
         return self.email
 
-    # objects = UserManager()
+    objects = UserManager()

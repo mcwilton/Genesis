@@ -1,15 +1,49 @@
-{% extends 'layouts/base.html' %}
-
-{% load static %}
 {% load humanize %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Genesis20 | The NextGen interactive learning platform </title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="csrf-token" content="XxcllLKieKJvmyzhQ4qVmpKosOSdsCNOI2kwWPbN">
+    <link rel="icon" href="http://genesis-20.com/img/browse_icon.png">
+    <!-- Libs CSS -->
 
-{% block content %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <section class="home-banner-area" style="background-image: url({% static 'images/learning.jpg' %})">
-        <div class="container-lg">
-            <div class="row">
-                <div class="col">
-                    <div class="home-banner-wrap">
+    <link rel="stylesheet" href="http://genesis-20.com/assets/libs/tiny-slider/dist/tiny-slider.css">
+    <link rel="stylesheet" href="http://genesis-20.com/assets/libs/ion-rangeslider/css/ion.rangeslider.min.css">
+    <link rel="stylesheet" href="http://genesis-20.com/assets/libs/litepicker/dist/css/litepicker.css">
+    <link rel="stylesheet" href="http://genesis-20.com/assets/libs/bootstrap-icons/font/bootstrap-icons.css">
+
+        <!-- Theme CSS -->
+    <link rel="stylesheet" href="http://genesis-20.com/assets/css/theme.min.css">
+    <link rel="stylesheet" href="{% static 'frontend/css/main.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css">
+
+    <link rel="stylesheet" href="https://cdn.quilljs.com/1.3.6/quill.snow.css">
+    <link rel="stylesheet" href="https://cdn.quilljs.com/1.3.6/quill.bubble.css">
+
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+
+</head>
+<body>
+
+  <header class="header bg-dark p-5 text-dark" id="header">
+     <!-- navigation start -->
+     <div class="container-fluid">
+      <nav class="navbar navbar-expand-lg navbar-default">
+          <a class="navbar-brand" href="http://genesis-20.com/"><img src="http://genesis-20.com/img/Logo White2.png" width="120" alt="" /></a>
+
+          <!--<form class="mt-3 mt-lg-0 ms-lg-3 d-flex align-items-center"     >-->
+          <!--  <span class="position-absolute ps-3 search-icon">-->
+          <!--    <i class="fe fe-search"></i>-->
+          <!--  </span>-->
+          <!--  <input type="search" placeholder="Search Courses" class="form-control ps-6 pl-4">-->
+          <!--</form>-->
+<div class="home-banner-wrap">
                         <h2>Best place for learning</h2>
                         <p>Learn from any topic, choose from category</p>
                         <form class="" action="{% url 'udemy:search' %}" method="get">
@@ -22,139 +56,350 @@
                             </div>
                         </form>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="home-fact-area">
-        <div class="container-lg">
-            <div class="row">
-                <div class="col-md-4 d-flex">
-                    <div class="home-fact-box mr-md-auto ml-auto mr-auto">
-                        <i class="fas fa-bullseye float-left"></i>
-                        <div class="text-box">
-                            <h4>{{ courses.count }} online courses</h4>
-                            <p>Explore A Variety Of Fresh Topics</p>
-                        </div>
+
+          <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-default" aria-controls="navbar-default" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-th text-white"></i>
+              </button>
+                    <div class="collapse navbar-collapse" id="navbar-default">
+                        <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-default" aria-controls="navbar-default" aria-expanded="false" aria-label="Toggle navigation">
+                  <i class="fas fa-times"></i>
+                </button>
+
+
+              <ul class="navbar-nav ms-auto me-lg-3 ">
+                  <li class="nav-item dropdown disabled">
+                      <a class="nav-link d-lg-none" href="#">
+                      Menu
+                    </a>
+                  </li>
+                    <div class="wishlist-box menu-icon-box" id="wishlist_items">
+                        {#                        Wishlist will be here#}
                     </div>
-                </div>
 
-                <div class="col-md-4 d-flex">
-                    <div class="home-fact-box mr-md-auto ml-auto mr-auto">
-                        <i class="fa fa-check float-left"></i>
-                        <div class="text-box">
-                            <h4>Expert Instruction</h4>
-                            <p>Find The Right Course For You</p>
-                        </div>
-                    </div>
-                </div>
+                  <li class="nav-item ">
+                      <a class="nav-link " href="http://genesis-20.com/" >
+                      Browse Courses
+                      </a>
+                    </li>
+                  </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="menu-7" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                     <i class="fe fe-shopping-cart font-20"></i> <span class="badge bg-secondary position-absolute top-0 start-100 translate-middle">0</span>
+                    </a>
 
-                <div class="col-md-4 d-flex">
-                    <div class="home-fact-box mr-md-auto ml-auto mr-auto">
-                        <i class="fa fa-clock float-left"></i>
-                        <div class="text-box">
-                            <h4>Lifetime Access</h4>
-                            <p>Learn On Your Schedule</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+                    <ul class="dropdown-menu dropdown-menu-arrow  dropdown-menu-xl-left dropdown-menu-md  " aria-labelledby="menu-7">
 
-    <section class="course-carousel-area">
-        <div class="container-lg">
-            <div class="row">
-                <div class="col">
-                    <h2 class="course-carousel-title">Top Courses</h2>
-                    <div class="course-carousel">
-                        {% for top_course in top_courses %}
+                     <li class="p-3">
+                          <a class="dropdown-list-group-item" href="http://genesis-20.com/student/cart">
+                              <div class="d-flex align-items-center mb-3">
+                                  <span class="me-3">
+                                    <i class="fe fe-shopping-bag font-24"></i>
+                                </span>
+                                  <div>
+                                      <h5 class="font-14 text-muted ">You have <strong>0</strong> courses on your cart list</h5>
 
-                            <div class="course-box-wrap">
-                                <a href="{% url 'courses:course-details' top_course.slug %}" class="has-popover">
-                                    <div class="course-box">
-                                        <div class="course-badge position best-seller">Best seller</div>
-                                        <div class="course-image">
-                                            <img style="height: 200px; width: 200px" src="{{ top_course.thumbnail.url }}" alt="" class="img-fluid">
-                                        </div>
-                                        <div class="course-details">
-                                            <h5 class="title">{{ top_course.title }}</h5>
-                                            <p class="instructors">{{ top_course.short_description }}</p>
-                                            <div class="rating">
-                                                <i class="fas fa-star filled"></i>
-                                                <i class="fas fa-star filled"></i>
-                                                <i class="fas fa-star filled"></i>
-                                                <i class="fas fa-star"></i>
-                                                <span class="d-inline-block average-rating">5</span>
-                                            </div>
-                                            <p class="price text-right">
-                                                ${{ top_course.price | floatformat:2 | intcomma }}
-                                            </p>
-                                        </div>
-                                    </div>
+                                  </div>
+
+                              </div>
+                              <hr>
+                              <h5>Total: R0</h5>
+                          </a>
+                      </li>
+                  </ul>
+                  </li>
+                      <ul> {% if request.user.is_authenticated %}
+                        <div class="user-box menu-icon-box">
+                            <div class="icon">
+                                <a href="">
+                                    <img src="{% static 'images/avatar.png' %}" alt="" class="img-fluid">
                                 </a>
-
-                                <div class="webui-popover-content">
-                                    <div class="course-popover-content">
-
-                                        <div class="course-title">
-                                            <a href="#">{{ top_course.title }}</a>
-                                        </div>
-                                        <!-- <div class="course-category">
-                                            <span class="course-badge best-seller">Best seller</span>
-                                            in
-                                            <a href="">PHP</a>
-                                        </div> -->
-                                        <div class="course-meta">
-                                            <span class=""><i class="fas fa-play-circle"></i>
-                                                0 Lessons
-                                            </span>
-                                            <span class=""><i class="far fa-clock"></i>
-                                                2 Hours
-                                            </span>
-                                            <span class="">
-                                                <i class="fas fa-closed-captioning"></i>English
-                                            </span>
-                                        </div>
-                                        <div class="course-subtitle">{{ top_course.short_description }}</div>
-                                        <div class="what-will-learn">
-                                            <ul>
-                                                {{ top_course.outcomes }}
-                                            </ul>
-                                        </div>
-                                        <div class="popover-btns">
-                                            {#                                            @if(auth()->check() && \App\Enroll::whereCourseId($top_course->id)->first()#}
-                                            {#                                            !== null)#}
-                                            {#                                            <div class="purchased">#}
-                                            {#                                                <a href="#">Already purchased</a>#}
-                                            {#                                            </div>#}
-                                            {#                                            @elseif(Cart::get($top_course->id) !== null)#}
-                                            {#                                            <button type="button"#}
-                                            {#                                                    class="btn add-to-cart-btn addedToCart big-cart-button-1"#}
-                                            {#                                                    id="1">#}
-                                            {#                                                Added To Cart#}
-                                            {#                                            </button>#}
-                                            {#                                            @else#}
-                                            <button type="button"
-                                                    class="btn add-to-cart-btn addedToCart big-cart-button-1"
-                                                    id="1">
-                                                Add To Cart
-                                            </button>
-                                            {#                                            @endif#}
-                                            <button type="button"
-                                                    class="wishlist-btn"
-                                                    title="Add to wishlist"
-                                                    id="1"><i class="fas fa-heart"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
-                        {% endfor %}
-                    </div>
+                            <div class="dropdown user-dropdown corner-triangle top-right">
+                                <ul class="user-dropdown-menu">
+
+                                    <li class="dropdown-user-info">
+                                        <a href="">
+                                            <div class="clearfix">
+                                                <div class="user-image float-left">
+                                                    <img src="{% static 'images/avatar.png' %}" alt=""
+                                                         class="img-fluid">
+                                                </div>
+                                                <div class="user-details">
+                                                    <div class="user-name">
+                                                        <span class="hi">hi,</span> {{ request.user.email }}
+                                                    </div>
+                                                    <div class="user-email">
+                                                        <span class="email">{{ request.user.name }}</span>
+                                                        <span class="welcome">Welcome back</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+
+                                    <li class="user-dropdown-menu-item">
+                                        <a href="{% url 'accounts:enrolled-courses' %}">
+                                            <i class="far fa-gem"></i>Enrolled Courses
+                                        </a>
+                                    </li>
+                                    <li class="user-dropdown-menu-item">
+                                        <a href="">
+                                            <i class="far fa-heart"></i>My Wishlist
+                                        </a>
+                                    </li>
+                                    <li class="user-dropdown-menu-item">
+                                        <a href="{% url 'accounts:my-profile' %}">
+                                            <i class="fas fa-user"></i>Profile Edit
+                                        </a>
+                                    </li>
+                                    <li class="dropdown-user-logout user-dropdown-menu-item">
+                                        <a href="{% url 'accounts:logout' %}">Logout</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    {% else %}
+                        <span class="signin-box-move-desktop-helper"></span>
+                        <div class="sign-in-box btn-group">
+
+                            <a href="{% url 'accounts:login' %}" class="btn btn-sign-in">Login</a>
+
+                            <a href="{% url 'accounts:register' %}" class="btn btn-sign-up">Sign up</a>
+
+                        </div>
+                    {% endif %}
+
+                                  
+                                                  </ul>
+
+
+          </div>
+      </nav>
+  </div>
+  <!-- navigation close -->
+</header>
+</div>
+
+<!--Container Main start-->
+
+
+      <div class="py-lg-19 pt-14 pb-10 bg-cover" style="background-image:linear-gradient(180deg, rgba(30, 24, 53, 0.4) 0%, rgba(30, 24, 53, 0.4) 90.16%),
+url(https://images.unsplash.com/photo-1594788094620-4579ad50c7fe?ixid=MnwxMjA3fDB8MHxzZWFyY2h8ODl8fG9ubGluZSUyMGxlYXJuaW5nfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60);">
+  <div class="container">
+
+      <div class="row">
+          <div class="col-xxl-5 col-lg-6 col-md-8 col-12">
+            <div class="text-white">
+                <h1 class="text-white mb-3 display-1">
+                   Online Learning.
+                </h1>
+                <h2 class="mb-3 text-white">
+                    Welcome to Genesis 20 Learning application.
+                </h2>
+                <p class="mb-3 pr-lg-12 pr-0">
+                    Digital learning has never been made this easier with our 4th industrial learning management platform.
+                </p>
+                <a href="#browse_courses" class="btn btn-outline-primary btn-lg mt-4">Browse Courses</a>
+            </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+
+
+    <div class="py-8 py-lg-8">
+        <div class="container">
+          <div class="row mb-10 justify-content-center">
+            <div class="col-lg-8 col-md-12 col-12 text-center">
+              <!-- caption -->
+              <span class="text-primary mb-3 d-block text-uppercase fw-semi-bold ls-xl">Why Learn with Genesis</span>
+              <h2 class="mb-2 display-4 fw-bold ">Build better skills,faster</h2>
+              <p class="lead">Explore new skills, deepen existing passions, and get lost in creativity. What you find
+                just might surprise and inspire you.</p>
+            </div>
+          </div>
+     <!-- row -->
+          <div class="row">
+            <div class="col-lg-3 col-md-6 col-12">
+               <!-- features -->
+              <div class="mb-4">
+                 <!-- icon -->
+                <div class="display-4 text-primary">
+                  <i class="fe fe-settings"></i>
                 </div>
+                 <!-- para -->
+                <div class="mt-4">
+                  <h4>Learn the latest skills</h4>
+                    <p class="">Over {{ courses.count }} online courses</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-12">
+               <!-- features -->
+              <div class="mb-4">
+                 <!-- icon -->
+                 <div class="display-4 text-primary">
+                  <i class="fe fe-user"></i>
+                </div>
+                 <!-- para -->
+                <div class="mt-4">
+                  <h4>Get ready for a career</h4>
+                  <p class="">Pellentesque eu mi rhoncus, rhoncus tortor a, interdum nisi.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-12">
+               <!-- features -->
+              <div class="mb-4">
+                 <!-- icon -->
+                 <div class="display-4 text-primary">
+                  <i class="fe fe-award"></i>
+                </div>
+                 <!-- para -->
+                <div class="mt-4">
+                  <h4>Earn a Certificate</h4>
+                  <p class="">Quisque tempus lectus cursus, imperdiet eros vel, pulvinar arcu.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-12">
+               <!-- features -->
+              <div class="mb-4">
+                 <!-- icon -->
+                 <div class="display-4 text-primary">
+                  <i class="fe fe-users"></i>
+                </div>
+                 <!-- para -->
+                <div class="mt-4">
+                  <h4>Upskill your organization</h4>
+                  <p class="">Etiam dignissim est tristique ex porta, bibendum commodo.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <div></div></div>
+
+
+
+
+
+
+    <div class="pt-lg-8 pb-lg-16 bg-light">
+        <div class="container">
+            <div class="row ">
+                <div class="col-md-12">
+                    <span class="text-primary mb-3 d-block text-uppercase fw-semi-bold ls-lg">Browse Categories</span>
+                    <h2 class="mb-1 display-4 fw-bold">The world's top courses</h2>
+                    <p class="mb-8 lead">Choose from {{ courses.count }} online video courses with new additions published every month.</p>
+                  </div>
+            </div>
+            <div class="row">
+
+
+                <!-- course thumbnail -->
+  {% for top_course in top_courses %}
+                <div class="col-xl-4 col-lg-6 col-md-6 col-12">
+
+                    <div class="mb-4" >
+                        <a href="{% url 'courses:course-details' top_course.slug %}" class="has-popover">
+                            <img src="{{ top_course.thumbnail.url}}" alt=""  style="height: 200px; width: 200px" class="img-fluid-edit w-100  rounded-top">
+
+                        </a>
+                        <div class="card-body p-3 border border-top-0 rounded-bottom bg-white">
+                            <a href="{% url 'courses:course-details' top_course.slug %}">
+                                <h3 class="mb-3">{{ top_course.title }}</h3>
+                            </a>
+                            <p>{{ top_course.short_description }}</p>
+                            <p class="font-12">
+                                <span class="me-2"> Level - {{ top_course.level }}</span>
+                                <span class="me-2"><i class="fe fe-monitor"> </i> Self-paced</span>
+                                <span class="me-2"><i class="fe fe-repeat"> </i> Lifetime Access</span>
+                            </p>
+                            <a href="{% url 'courses:course-details' top_course.slug %}" class="btn btn-outline-dark btn-block">Learn More</a>
+                        </div>
+                    </div>
+                </a>
+                </div>
+                {% endfor %}
             </div>
         </div>
-    </section>
+    </div>
 
-{% endblock %}
+
+
+    <!-- Optional JavaScript -->
+    <!-- Libs JS -->
+    <script src="http://genesis-20.com/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script>
+      $(function(){
+
+
+
+
+                });
+      </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <script src="http://genesis-20.com/assets/libs/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="http://genesis-20.com/assets/libs/magnific-popup/dist/jquery.magnific-popup.min.js"></script>
+    <script src="http://genesis-20.com/assets/libs/prismjs/prism.js"></script>
+
+    <script src="http://genesis-20.com/assets/libs/litepicker/dist/litepicker.js"></script>
+
+    <script>
+
+      document.addEventListener("DOMContentLoaded", function(event) {
+
+      const showNavbar = (toggleId, navId, bodyId, headerId) =>{
+      const toggle = document.getElementById(toggleId),
+      nav = document.getElementById(navId),
+      bodypd = document.getElementById(bodyId),
+      headerpd = document.getElementById(headerId)
+
+          // Validate that all variables exist
+          if(toggle && nav && bodypd && headerpd){
+          toggle.addEventListener('click', ()=>{
+          // show navbar
+          nav.classList.toggle('shows')
+          // change icon
+          toggle.classList.toggle('bx-menu-alt-left')
+          // add padding to body
+          bodypd.classList.toggle('body-pd')
+          // add padding to header
+          headerpd.classList.toggle('body-pd')
+          })
+          }
+      }
+
+        showNavbar('header-toggle','nav-bar','body-pd','header')
+
+
+        // Your code to run since DOM is loaded and ready
+        });
+            </script>
+
+            <script>
+              new Litepicker({
+          element:  document.getElementsByClassName('pickDate'),
+          autoApply: false,
+        })
+    </script>
+
+    <script src="http://genesis-20.com/assets/libs/ion-rangeslider/js/ion.rangeslider.min.js"></script>
+    <script src="http://genesis-20.com/assets/libs/inputmask/dist/jquery.inputmask.min.js"></script>
+    <script src="http://genesis-20.com/assets/libs/tiny-slider/dist/min/tiny-slider.js"></script>
+    <!-- clipboard -->
+    <script src="http://genesis-20.com/ajax/libs/clipboard-js/1-5-12/clipboard.min.js"></script>
+    <!-- Theme JS -->
+    <script src="http://genesis-20.com/assets/js/theme.min.js"></script>
+
+
+
+
+
+{% include 'partials/footer.html' %}
+{% include 'partials/scripts.html' %}

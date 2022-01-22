@@ -4,6 +4,9 @@ from django.urls import path, include
 
 from Genesis import settings
 
+admin.site.site_header = 'Genesis Admin'
+admin.site.index_title = 'Genesis Self-paced Learning System'
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('cart/', include('cart.urls')),
