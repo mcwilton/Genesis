@@ -1,13 +1,13 @@
 from django import forms
 from django.contrib.auth import authenticate
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UsernameField
 
 from .models import User
 
 
 class UserLoginForm(forms.Form):
     email = forms.EmailField()
-    # username = UsernameField(widget=forms.TextInput(attrs={'autofocus': True}))
+    username = UsernameField(widget=forms.TextInput(attrs={'autofocus': True}))
     password = forms.CharField(
         label="Password",
         strip=False,
