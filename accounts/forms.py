@@ -7,7 +7,7 @@ from .models import User
 
 class UserLoginForm(forms.Form):
     email = forms.EmailField()
-    username = UsernameField(widget=forms.TextInput(attrs={'autofocus': True}))
+    # username = UsernameField(widget=forms.TextInput(attrs={'autofocus': True}))
     password = forms.CharField(
         label="Password",
         strip=False,

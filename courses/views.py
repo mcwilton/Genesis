@@ -41,6 +41,11 @@ class CourseDetailView(DetailView):
             context['is_in_cart'] = cart.has_course(course)
         return context
 
+    def related_course(request):
+        q = Course.objects.all()
+        context={"related_courses":q}
+        return render(request, 'courses/details.html', context)
+
 
 class CoursesByCategoryListView(ListView):
     model = Course

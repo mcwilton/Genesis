@@ -25,6 +25,17 @@
 
 
                         </div>
+                         <div class="created-row">
+                            {#                            {{ --<span class="created-by">--}}#}
+                            {#                            {{ --Created by--}}#}
+                            {#                            {{ --<a href="">first_name last_name</a>--}}#}
+                            {#                            {{ --</span>--}}#}
+                            <span class="last-updated-date">Created on {{ course.created_at|date }} | </span>
+                            <span class="last-updated-date">Last updated on {{ course.updated_at|date }} | </span>
+                            <span class="comment">
+                                <i class="fas fa-comment"></i>English
+                            </span>
+                        </div>
                     </div>
 
                     <a class="btn btn-dark mt-4 me-3" data-bs-toggle="modal" data-bs-target="#CallBack">Request a call
@@ -367,7 +378,9 @@
 
             <div class="row">
                 <!-- course thumbnail -->
+                
                 <div class="col-xl-4 col-lg-4 col-md-6 col-12">
+                  {% for related_course in related_courses %}
                     <div class="card mb-4">
                         <a href="#">
                             <img src="../assets/images/course-img-4.jpg" alt="" class="img-fluid w-100 border-top
@@ -375,7 +388,7 @@
                         </a>
                         <div class="card-body p-4">
                             <a href="#">
-                                <h4 class="mb-4">Leadership &amp; Management Development</h4>
+                                <h4 class="mb-4">{{related_course.title}}</h4>
                             </a>
                             <p class="font-13 fw-bold">
                                 <span class="me-2">20 Lessons</span>
@@ -385,44 +398,12 @@
                         </div>
                     </div>
                 </div>
+                {% endfor %}
                 <!-- course thumbnail -->
-                <div class="col-xl-4 col-lg-4 col-md-6 col-12">
-                    <div class="card mb-4">
-                        <a href="#">
-                            <img src="../assets/images/course-img-5.jpg" alt="" class="img-fluid w-100 border-top
-                         border-5 border-primary rounded-top">
-                        </a>
-                        <div class="card-body p-4">
-                            <a href="#"><h4 class="mb-4">
-                                Transform your relationship with Coaching
-                            </h4></a>
-                            <p class="font-13 fw-bold">
-                                <span class="me-2">12 Lessons</span>
-                                <span class="me-2">12 Students</span> <span>2 weeks</span>
-                            </p>
-                            <span class="fw-bold text-secondary h4 mb-0">R65.00</span>
-                        </div>
-                    </div>
-                </div>
+                
+                
                 <!-- course thumbnail -->
-                <div class="col-xl-4 col-lg-4 col-12 d-md-none d-lg-block">
-                    <div class="card mb-4">
-                        <a href="#">
-                            <img src="../assets/images/course-img-6.jpg" alt="" class="img-fluid w-100 border-top
-                     border-5 border-primary rounded-top">
-                        </a>
-                        <div class="card-body p-4">
-                            <a href="#"><h4 class="mb-4">
-                                Team Coaching Principles and Strategies
-                            </h4></a>
-                            <p class="font-13 fw-bold">
-                                <span class="me-2">7 Lessons</span>
-                                <span class="me-2">65 Students</span> <span>1 weeks</span>
-                            </p>
-                            <span class="fw-bold text-secondary h4 mb-0">R35.00</span>
-                        </div>
-                    </div>
-                </div>
+                
             </div>
         </div>
     </div>
